@@ -16,6 +16,13 @@ return new class extends Migration
             $table->integer('total');
             $table->integer('vat');
             $table->integer('payable');
+            $table->string('cus_details');
+            $table->string('ship_details');
+            $table->string('transaction_id');
+            $table->string('val_id');
+            $table->enum('status', ['pending', 'processing', 'completed', 'declined']);
+            $table->string('payment_status');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

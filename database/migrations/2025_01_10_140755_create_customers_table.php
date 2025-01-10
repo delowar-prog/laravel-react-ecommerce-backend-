@@ -23,7 +23,14 @@ return new class extends Migration
             $table->string('cus_phone');
             $table->string('cus_email')->unique();
             $table->string('ship_name');
-            
+            $table->string('ship_address');
+            $table->string('ship_country');
+            $table->string('ship_division');
+            $table->string('ship_district');
+            $table->string('ship_upazila');
+            $table->string('ship_post_code');
+            $table->string('ship_phone');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

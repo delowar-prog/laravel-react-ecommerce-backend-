@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('short_des')->nullable();
-            $table->string('price');
-            $table->tinyInteger('discount');
-            $table->string('discount_price');
+            $table->integer('price');
+            $table->tinyInteger('discount')->default(0)->nullable();
+            $table->integer('discount_price')->nullable();
             $table->string('image');
             $table->integer('stock');
             $table->double('star')->default(5)->nullable();
