@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AuthContorller;
+use App\Http\Controllers\BrandController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,3 +16,6 @@ Route::post('/login', [AuthContorller::class, 'login']);
 Route::post('/logout', [AuthContorller::class, 'logout'])->middleware('auth:sanctum');
 
 Route::middleware('auth:sanctum')->get('/user', [AuthContorller::class, 'user']);
+
+Route::apiResource('categories', CategoryController::class);
+Route::apiResource('brands', BrandController::class);
