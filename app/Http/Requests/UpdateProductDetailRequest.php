@@ -11,7 +11,7 @@ class UpdateProductDetailRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -19,10 +19,19 @@ class UpdateProductDetailRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
+    
     public function rules(): array
     {
         return [
-            //
+            'product_id' => 'nullable|integer',
+            'color' => 'nullable|string|max:255',
+            'size' => 'nullable|string|max:255',
+            'description' => 'nullable|string',
+            'img1' => 'nullable|file|mimes:jpeg,png,jpg|max:2048', // Optional in update
+            'img2' => 'nullable|file|mimes:jpeg,png,jpg|max:2048',
+            'img3' => 'nullable|file|mimes:jpeg,png,jpg|max:2048',
+            'img4' => 'nullable|file|mimes:jpeg,png,jpg|max:2048',
         ];
     }
+    
 }
