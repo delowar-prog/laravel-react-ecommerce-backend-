@@ -23,7 +23,7 @@ class StoreBrandRequest extends FormRequest
     {
         return [
             'brandName' => 'required|string|max:255',
-            'brandImg' => 'nullable|file|mimes:jpeg,png,jpg|max:2048', // Example for logo upload
+            'brandimg' => 'nullable|file|mimes:jpeg,png,jpg|max:2048', // Example for logo upload
         ];
     }
 }

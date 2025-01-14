@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UserResource;
 use App\Models\User;
+use App\Services\ApiResponseService;
 use Auth;
 use Illuminate\Http\Request;
 
@@ -49,7 +51,8 @@ class AuthContorller extends Controller
     }
     public function user(Request $request)
     {
-        return $request->user();
+        $user = new UserResource($request->user());
+        return ApiResponseService::success($user, 'User data retrieved successfully');
     }
     public function logout(Request $request){
         $request->user()->currentAccessToken()->delete();
