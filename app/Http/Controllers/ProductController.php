@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Http\Resources\ProductResource;
 use App\Models\Product;
+use App\Services\ApiResponseService;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -14,12 +16,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::paginate();
-        return response()->json([
-            'status' => true,
-            'message' => 'Products retrieved successfully',
-            'data' => $products,
-        ]);
+        $products = ProductResource::collection(Product::paginate())->response()->getData();
+      return ApiResponseService::success($products, 'Product retrived successfully');
     }
 
     /**
@@ -30,15 +28,20 @@ class ProductController extends Controller
         $data = $request->validated();
 
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('products', 'public');
+            $file = $request->file('image');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $filepath = 'uploads/products';
+
+            $data['image'] = $file->storeAs($filepath, $filename, 'public');
         }
 
-        $brand = Product::create($data);
+        $product = Product::create($data);
 
         return response()->json([
             'status' => true,
             'message' => 'Product created successfully',
-            'data' => $brand,
+            'data' => $product,
+            'image' => asset('storage/' . $data['image']),
         ]);
     }
 
