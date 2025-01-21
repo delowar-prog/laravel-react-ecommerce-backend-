@@ -85,10 +85,17 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
+        // Check if the product has an image and delete it from storage
+        if ($product->image && \Illuminate\Support\Facades\Storage::disk('public')->exists($product->image)) {
+            \Illuminate\Support\Facades\Storage::disk('public')->delete($product->image);
+        }
+    
+        // Delete the product from the database
         $product->delete();
+    
         return response()->json([
             'status' => true,
-            'message' => 'Product deleted successfully',
+            'message' => 'Product and associated image deleted successfully',
         ]);
     }
 }
