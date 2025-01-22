@@ -14,9 +14,10 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $products = ProductResource::collection(Product::paginate())->response()->getData();
+        $products = Product::filter($request);
+        $products = ProductResource::collection($products->paginate(5))->response()->getData();
       return ApiResponseService::success($products, 'Product retrived successfully');
     }
 
