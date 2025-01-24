@@ -41,8 +41,7 @@ class ProductController extends Controller
         return response()->json([
             'status' => true,
             'message' => 'Product created successfully',
-            'data' => $product,
-            'image' => asset('storage/' . $data['image']),
+            'data' => new ProductResource($product),
         ]);
     }
 
@@ -53,7 +52,7 @@ class ProductController extends Controller
     {
         return response()->json([
             'status' => true,
-            'message' => 'Brand retrive successfully',
+            'message' => 'Brand Retrive successfully',
             'data' => $product,
         ]);
     }
@@ -90,10 +89,10 @@ class ProductController extends Controller
         if ($product->image && \Illuminate\Support\Facades\Storage::disk('public')->exists($product->image)) {
             \Illuminate\Support\Facades\Storage::disk('public')->delete($product->image);
         }
-    
+
         // Delete the product from the database
         $product->delete();
-    
+
         return response()->json([
             'status' => true,
             'message' => 'Product and associated image deleted successfully',

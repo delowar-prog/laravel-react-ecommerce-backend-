@@ -18,11 +18,17 @@ class ProductResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'price' => $this->price,
-            'image' => $this->image ? asset('storage/' . $this->image) : null,
-            'brand_id' => $this->brand_id,
-            'brand' => $this->brand?->brandName,
+            'stock' => $this->stock,
+            'image' => $this->image ? asset('storage/' . $this->image) : null, // Add full URL for the image
             'category_id' => $this->category_id,
-            'category' => $this->category?->name,
-                ];
+            'brand_id' => $this->brand_id,
+            'star' => $this->star,
+            'discount' => $this->discount,
+            'discount_price' => $this->discount_price,
+            'short_des' => $this->short_des,
+            'remarks' => $this->remarks,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+        ];
     }
 }
