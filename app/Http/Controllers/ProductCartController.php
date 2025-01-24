@@ -12,23 +12,45 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ProductCartController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+   
+    public function index(Request $request)
     {
-        $carts = ProductCartResource::collection(ProductCart::paginate())->response()->getData();
+        $query = ProductCart::query();
+    
+        if ($request->has('user_id')) {
+            $query->where('user_id', $request->user_id);
+        }
+    
+        $carts = ProductCartResource::collection($query->get());
         return ApiResponseService::success($carts, 'Product Carts retrieved successfully', Response::HTTP_OK);
     }
+    
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreProductCartRequest $request)
-    {
-        $cart = ProductCart::create($request->validated());
-        return ApiResponseService::success(new ProductCartResource($cart), 'Product Cart stored successfully', Response::HTTP_CREATED);
+public function store(StoreProductCartRequest $request)
+{
+    $validated = $request->validated();
+
+    // Check if the product already exists in the user's cart
+    $existingCart = ProductCart::where('user_id', $validated['user_id'])
+        ->where('product_id', $validated['product_id'])
+        ->first();
+
+    if ($existingCart) {
+        $existingCart->quantity += $validated['quantity'];
+        $existingCart->save();
+
+        return ApiResponseService::success(
+            new ProductCartResource($existingCart),
+            'Cart updated successfully',
+            Response::HTTP_OK
+        );
     }
+
+    $cart = ProductCart::create($validated);
+
+    return ApiResponseService::success( new ProductCartResource($cart), 'Product Cart stored successfully', Response::HTTP_CREATED);
+}
+
 
     /**
      * Display the specified resource.
