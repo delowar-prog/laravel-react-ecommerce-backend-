@@ -25,8 +25,8 @@ class StoreProductCartRequest extends FormRequest
              'product_id' => ['required', 'exists:products,id'],  
                 'user_id' => ['required', 'exists:users,id'],
                 'quantity' => ['required', 'integer', 'min:1'],
-                'color' => ['required', 'string'],
-                'size' => ['required', 'string'],
+                'color' => 'nullable',
+                'size' => 'nullable',
                 'price' => ['required', 'numeric', 'min:0']
         ];
     }

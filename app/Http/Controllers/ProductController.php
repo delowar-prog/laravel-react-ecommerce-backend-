@@ -17,7 +17,7 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $products = Product::filter($request);
-        $products = ProductResource::collection($products->paginate(5))->response()->getData();
+        $products = ProductResource::collection($products->paginate(10))->response()->getData();
       return ApiResponseService::success($products, 'Product retrived successfully');
     }
 
