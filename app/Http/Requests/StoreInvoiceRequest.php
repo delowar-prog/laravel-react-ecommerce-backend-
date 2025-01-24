@@ -11,7 +11,7 @@ class StoreInvoiceRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,16 @@ class StoreInvoiceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'total' => 'required|numeric',
+            'vat' => 'required|numeric',
+            'payable' => 'required|numeric',
+            'cus_details' => 'required|string',
+            'ship_details' => 'nullable|string',
+            'transaction_id' => 'required|string|unique:invoices',
+            'val_id' => 'nullable|string',
+            'status' => 'required|string',
+            'payment_status' => 'required|string',
+            'user_id' => 'required|exists:users,id',
         ];
     }
 }
