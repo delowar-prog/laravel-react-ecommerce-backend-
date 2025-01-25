@@ -53,7 +53,7 @@ class ProductController extends Controller
         return response()->json([
             'status' => true,
             'message' => 'Brand Retrive successfully',
-            'data' => $product,
+            'data' => new ProductResource($product),
         ]);
     }
 
