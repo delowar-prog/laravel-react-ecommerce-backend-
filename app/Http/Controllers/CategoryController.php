@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
+use App\Http\Resources\CategoryResource;
 use App\Models\Category;
+use App\Services\ApiResponseService;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -12,14 +14,15 @@ class CategoryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $category = Category::paginate();
-        return response()->json([
-            'status' =>true,
-            'message' =>'Category retrived successfully',
-            'data' =>$category,
-        ]);
+        $categories = Category::filter($request);
+        
+        if ($request->boolean('all', false)) {
+            return ApiResponseService::success($categories->get(['id', 'name']), 'Categories retrieve successfully');
+        }
+        $categories = CategoryResource::collection($categories->paginate())->response()->getData();
+      return ApiResponseService::success($categories, 'Category retrived successfully');
     }
 
     /**
@@ -27,6 +30,7 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryRequest $request)
     {
+        
         $category = Category::create($request->validated());
         return response()->json([
             'status' =>true,

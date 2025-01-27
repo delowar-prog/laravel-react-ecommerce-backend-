@@ -26,6 +26,7 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
+        
         $data = $request->validated();
 
         if ($request->hasFile('image')) {
@@ -35,6 +36,7 @@ class ProductController extends Controller
 
             $data['image'] = $file->storeAs($filepath, $filename, 'public');
         }
+        
 
         $product = Product::create($data);
 

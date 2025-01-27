@@ -11,7 +11,7 @@ class UpdateCustomerRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,16 @@ class UpdateCustomerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'cus_name' => 'required|string|max:255',
+            'cus_address' => 'required|string|max:255',
+            'cus_country' => 'required|string|max:255',
+            'cus_division' => 'required|string|max:255',
+            'cus_district' => 'required|string|max:255',
+            'cus_upazila' => 'required|string|max:255',
+            'cus_post_code' => 'required|string|max:10',
+            'cus_phone' => 'required|string|max:15',
+            'cus_email' => 'required|email|unique:customers,cus_email',
+            'ship_name' => 'required|string|max:255',
         ];
     }
 }

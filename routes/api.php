@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthContorller;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ProductCartController;
 use App\Http\Controllers\ProductController;
@@ -24,6 +25,7 @@ Route::apiResource('brands', BrandController::class);
 Route::apiResource('product-details', ProductDetailController::class);
 Route::apiResource('product-wishes', ProductWishController::class);
 Route::apiResource('product-carts', ProductCartController::class);
+Route::apiResource('customers',CustomerController::class);
 });
 Route::get('/user', [AuthContorller::class, 'user']);
 
@@ -33,7 +35,6 @@ Route::post('/login', [AuthContorller::class, 'login']);
 Route::post('/logout', [AuthContorller::class, 'logout'])->middleware('auth:sanctum');
 Route::middleware('auth:sanctum')->get('/user', [AuthContorller::class, 'user']);
 Route::apiResource('invoices', InvoiceController::class);
-// Route::apiResource('categories', CategoryController::class);
-// Route::apiResource('brands', BrandController::class);
+
 Route::apiResource('products', ProductController::class);
 
