@@ -9,6 +9,7 @@ use App\Http\Resources\BrandResource;
 use App\Models\Brand;
 use App\Services\ApiResponseService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class BrandController extends Controller
@@ -16,10 +17,15 @@ class BrandController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): JsonResponse
+    public function index(Request $request)
     {
-        $brands = BrandResource::collection(Brand::paginate())->response()->getData();
-        return ApiResponseService::success($brands, 'Brand retrived successfully');
+        $brands = Brand::filter($request);
+        
+        if ($request->boolean('all', false)) {
+            return ApiResponseService::success($brands->get(['id', 'brandName']), 'brands retrieve successfully');
+        }
+        $brands = BrandResource::collection($brands->paginate(10))->response()->getData();
+      return ApiResponseService::success($brands, 'Brand retrived successfully');
     }
 
     /**
