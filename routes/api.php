@@ -23,6 +23,7 @@ Route::apiResource('categories', CategoryController::class);
 Route::apiResource('brands', BrandController::class);
 
 Route::apiResource('product-details', ProductDetailController::class);
+Route::get('product-details/{product_id}', [ProductDetailController::class, 'show']);
 Route::apiResource('product-wishes', ProductWishController::class);
 Route::apiResource('product-carts', ProductCartController::class);
 Route::apiResource('customers',CustomerController::class);
@@ -37,4 +38,5 @@ Route::middleware('auth:sanctum')->get('/user', [AuthContorller::class, 'user'])
 Route::apiResource('invoices', InvoiceController::class);
 
 Route::apiResource('products', ProductController::class);
+Route::post('products/{product}',[ProductController::class,'update']);
 

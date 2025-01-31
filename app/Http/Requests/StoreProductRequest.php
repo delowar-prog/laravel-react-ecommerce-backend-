@@ -23,14 +23,14 @@ class StoreProductRequest extends FormRequest
     {
         return [
             'title' => 'required|string|max:255',
-            'short_des' => 'nullable|string',
+            'short_des' => 'nullable|string|max:500',
             'price' => 'required|numeric',
-            'discount' => 'nullable|numeric|min:0|max:100',
+            'discount' => 'nullable|integer|min:0|max:100',
             'discount_price' => 'nullable|numeric',
-            'image' => 'nullable|file|mimes:jpeg,png,jpg|max:2048',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:4096',
             'stock' => 'required|integer|min:0',
             'star' => 'nullable|numeric|min:0|max:5',
-            'remarks' => 'nullable|string',
+            'remarks' => 'nullable|in:new,sale,popular,featured,limited',
             'category_id' => 'required|exists:categories,id',
             'brand_id' => 'required|exists:brands,id',
         ];

@@ -27,7 +27,7 @@ class UpdateProductRequest extends FormRequest
             'price' => 'sometimes|numeric',
             'discount' => 'nullable|numeric|min:0|max:100',
             'discount_price' => 'nullable|numeric',
-            'image' => 'nullable|file|mimes:jpeg,png,jpg|max:2048',
+            'image' => 'nullable|file|mimes:jpeg,png,jpg|max:4096',
             'stock' => 'sometimes|integer|min:0',
             'star' => 'nullable|numeric|min:0|max:5',
             'remarks' => 'nullable|string',
