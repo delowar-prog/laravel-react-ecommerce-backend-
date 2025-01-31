@@ -21,7 +21,7 @@ class ProductSeeder extends Seeder
                 'price' => 999,
                 'discount' => 10,
                 'discount_price' => 899,
-                'image' => 'uploads/products/iphone14.jpg',
+                'image' => 'products/iphone14.jpg',
                 'stock' => 50,
                 'star' => 5,
                 
@@ -34,7 +34,7 @@ class ProductSeeder extends Seeder
                 'price' => 899,
                 'discount' => 15,
                 'discount_price' => 764,
-                'image' => 'uploads/products/s23.jpg',
+                'image' => 'products/s23.jpg',
                 'stock' => 70,
                 'star' => 4,
                 
@@ -47,7 +47,7 @@ class ProductSeeder extends Seeder
                 'price' => 799,
                 'discount' => 12,
                 'discount_price' => 703,
-                'image' => 'uploads/products/pixel7.png',
+                'image' => 'products/pixel7.png',
                 'stock' => 65,
                 'star' => 4,
                 
@@ -60,7 +60,7 @@ class ProductSeeder extends Seeder
                 'price' => 699,
                 'discount' => 10,
                 'discount_price' => 629,
-                'image' => 'uploads/products/oneplus11.jpg',
+                'image' => 'products/oneplus11.jpg',
                 'stock' => 80,
                 'star' => 4,
                 
@@ -73,7 +73,7 @@ class ProductSeeder extends Seeder
                 'price' => 599,
                 'discount' => 15,
                 'discount_price' => 509,
-                'image' => 'uploads/products/xiaomi13.jpg',
+                'image' => 'products/xiaomi13.jpg',
                 'stock' => 90,
                 'star' => 4,
                 
@@ -88,7 +88,7 @@ class ProductSeeder extends Seeder
                 'price' => 1199,
                 'discount' => 10,
                 'discount_price' => 1079,
-                'image' => 'uploads/products/dellxps13.jpg',
+                'image' => 'products/dellxps13.jpg',
                 'stock' => 40,
                 'star' => 5,
                 
@@ -101,7 +101,7 @@ class ProductSeeder extends Seeder
                 'price' => 1299,
                 'discount' => 5,
                 'discount_price' => 1234,
-                'image' => 'uploads/products/macbook-m2.png',
+                'image' => 'products/macbook-m2.png',
                 'stock' => 30,
                 'star' => 5,
                 
@@ -114,7 +114,7 @@ class ProductSeeder extends Seeder
                 'price' => 1599,
                 'discount' => 8,
                 'discount_price' => 1471,
-                'image' => 'uploads/products/asus-rog.png',
+                'image' => 'products/asus-rog.png',
                 'stock' => 20,
                 'star' => 5,
                 
@@ -127,7 +127,7 @@ class ProductSeeder extends Seeder
                 'price' => 1499,
                 'discount' => 10,
                 'discount_price' => 1349,
-                'image' => 'uploads/products/hp-spectre-x360.jpg',
+                'image' => 'products/hp-spectre-x360.jpg',
                 'stock' => 25,
                 'star' => 5,
                 

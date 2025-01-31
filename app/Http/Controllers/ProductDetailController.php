@@ -70,10 +70,19 @@ class ProductDetailController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $product_id)
     {
-        $product = ProductDetail::findOrFail($id);
-        return ApiResponseService::success(new ProductDetailResource($product),'Product retrieve successfully',Response::HTTP_OK);
+        $productDetails = ProductDetail::where('product_id', $product_id)->get();
+    
+        if ($productDetails->isEmpty()) {
+            return ApiResponseService::error('No product details found', Response::HTTP_NOT_FOUND);
+        }
+    
+        return ApiResponseService::success(
+            ProductDetailResource::collection($productDetails),
+            'Product details retrieved successfully',
+            Response::HTTP_OK
+        );
     }
 
     /**
@@ -123,6 +132,12 @@ class ProductDetailController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $detail = ProductDetail::findOrFail($id);
+        $detail->delete();
+        return ApiResponseService::success(
+            new ProductDetailResource($detail),
+            'Product detail delated successfully',
+            
+        );
     }
 }

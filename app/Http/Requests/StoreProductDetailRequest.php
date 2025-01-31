@@ -26,10 +26,10 @@ class StoreProductDetailRequest extends FormRequest
             'color' => 'required|string|max:255',
             'size' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'img1' => 'required|file|mimes:jpeg,png,jpg|max:2048',
-            'img2' => 'nullable|file|mimes:jpeg,png,jpg|max:2048',
-            'img3' => 'nullable|file|mimes:jpeg,png,jpg|max:2048',
-            'img4' => 'nullable|file|mimes:jpeg,png,jpg|max:2048',
+            'img1' => 'required|file|mimes:jpeg,png,jpg',
+            'img2' => 'nullable|file|mimes:jpeg,png,jpg',
+            'img3' => 'nullable|file|mimes:jpeg,png,jpg',
+            'img4' => 'nullable|file|mimes:jpeg,png,jpg',
         ];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\TokenAbility;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Services\ApiResponseService;
@@ -29,28 +30,35 @@ class AuthContorller extends Controller
     public function login(Request $request)
     {
         $validated = $request->validate([
-            'email' => 'required',
+            'email' => 'required|email',
             'password' => 'required|min:6|max:20',
         ]);
-
-        if(!Auth::attempt(['email' => $validated['email'], 'password' =>$validated['password']])){
+    
+        if (!Auth::attempt(['email' => $validated['email'], 'password' => $validated['password']])) {
             return response()->json([
-                'status' => False,
+                'status' => false,
                 'message' => 'Unauthenticated',
             ], 401);
         }
-
+    
         $user = User::where('email', $request->email)->firstOrFail();
-        $token = $user->createToken('auth_token')->plainTextToken;
-
+        $atExpireTime = now()->addMinutes(config('sanctum.expiration', 1)); // Default to 60 min
+        $rtExpireTime = now()->addMinutes(config('sanctum.rt_expiration', 1440)); // Default to 1 day
+    
+        $accessToken = $user->createToken('access_token', [TokenAbility::ACCESS_API], $atExpireTime)->plainTextToken;
+        $refreshToken = $user->createToken('refresh_token', [TokenAbility::ISSUE_ACCESS_TOKEN], $rtExpireTime)->plainTextToken;
+    
         return response()->json([
             'status' => true,
             'user' => new UserResource($user),
-            'token'  => $token,
-            'user' => $user,
-            'message' => 'User Login successfully',
+            'tokens' => [
+                'access_token' => $accessToken,
+                'refresh_token' => $refreshToken,
+            ],
+            'message' => 'User logged in successfully',
         ], 200);
     }
+    
     public function user(Request $request)
     {
         $user = new UserResource($request->user());

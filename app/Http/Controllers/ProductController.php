@@ -17,7 +17,10 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $products = Product::filter($request);
-        $products = ProductResource::collection($products->paginate(10))->response()->getData();
+        if ($request->boolean('all', false)) {
+            return ApiResponseService::success($products->get(['id', 'title']), 'Products retrieve successfully');
+        }
+        $products = ProductResource::collection($products->paginate(30))->response()->getData();
       return ApiResponseService::success($products, 'Product retrived successfully');
     }
 
@@ -30,11 +33,10 @@ class ProductController extends Controller
         $data = $request->validated();
 
         if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $filename = time() . '_' . $file->getClientOriginalName();
-            $filepath = 'uploads/products';
-
-            $data['image'] = $file->storeAs($filepath, $filename, 'public');
+            $image = $data['image'];
+            $filename = time().'_'.$image->getClientOriginalName();
+            $filePath = $image->storeAs('products', $filename, 'public');
+            $data['image'] = 'storage/' . $filePath;
         }
         
 
@@ -55,7 +57,7 @@ class ProductController extends Controller
         return response()->json([
             'status' => true,
             'message' => 'Brand Retrive successfully',
-            'data' => $product,
+            'data' => new ProductResource($product),
         ]);
     }
 
@@ -66,19 +68,25 @@ class ProductController extends Controller
     {
         $data = $request->validated();
 
-        if ($request->hasFile('image')) {
+        if ($data['image']) {
             // Delete the old image if it exists
-            if ($product->image && \Storage::disk('public')->exists($product->image)) {
-                \Storage::disk('public')->delete($product->image);
+            if ($product->image) {
+                $existingPath = public_path($product->image);
+                if (file_exists($existingPath)) {
+                    unlink($existingPath);
+                }
             }
-            $data['image'] = $request->file('image')->store('products', 'public');
+            $image = $data['image'];
+            $filename = time().'_'.$image->getClientOriginalName();
+            $filePath = $image->storeAs('products', $filename, 'public');
+            $data['image'] = 'storage/' . $filePath;
         }
         $product->update($data);
 
         return response()->json([
             'status' => true,
             'message' => 'Product updated successfully',
-            'data' => $product,
+            'data' => new ProductResource($product),
         ]);
     }
 

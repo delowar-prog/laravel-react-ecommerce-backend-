@@ -33,20 +33,26 @@ class BrandController extends Controller
      */
     public function store(StoreBrandRequest $request): JsonResponse
     {
-        $data = $request->validated();
+        $validated = $request->validated();
 
-        if ($request->hasFile('brandimg')) {
-            $file = $request->file('brandimg');
-            $filename = time() . '_' . $file->getClientOriginalName();
-            $filepath = 'uploads/brands';
-
-            $data['brandimg'] = $file->storeAs($filepath, $filename, 'public');
+        
+    
+        if ($validated['brandimg']) {
+            $image = $validated['brandimg'];
+            $filename = time().'_'.$image->getClientOriginalName();
+            $filePath = $image->storeAs('brand', $filename, 'public');
+            $validated['brandimg'] = 'storage/' . $filePath;
         }
-
-        $brand = Brand::create($data);
-
-        return ApiResponseService::success( new BrandResource($brand), 'Brand stored successfully', Response::HTTP_ACCEPTED);
+    
+        $brand = Brand::create($validated);
+    
+        return ApiResponseService::success(
+            new BrandResource($brand),
+            'Brand stored successfully',
+            Response::HTTP_ACCEPTED
+        );
     }
+    
 
 
     /**
