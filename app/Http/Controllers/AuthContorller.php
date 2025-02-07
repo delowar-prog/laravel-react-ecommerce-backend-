@@ -42,7 +42,7 @@ class AuthContorller extends Controller
         }
     
         $user = User::where('email', $request->email)->firstOrFail();
-        $atExpireTime = now()->addMinutes(config('sanctum.expiration', 1)); // Default to 60 min
+        $atExpireTime = now()->addMinutes(config('sanctum.expiration', 60)); // Default to 60 min
         $rtExpireTime = now()->addMinutes(config('sanctum.rt_expiration', 1440)); // Default to 1 day
     
         $accessToken = $user->createToken('access_token', [TokenAbility::ACCESS_API], $atExpireTime)->plainTextToken;

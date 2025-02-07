@@ -80,4 +80,20 @@ public function store(StoreProductCartRequest $request)
         $cart->delete();
         return ApiResponseService::success(null, 'Product Cart deleted successfully', Response::HTTP_OK);
     }
+
+    public function clearCart(Request $request)
+{
+    $userId = $request->user_id;
+
+    // Check if user_id is provided
+    if (!$userId) {
+        return ApiResponseService::error('User ID is required', Response::HTTP_BAD_REQUEST);
+    }
+
+    // Delete all cart items for the user
+    ProductCart::where('user_id', $userId)->delete();
+
+    return ApiResponseService::success(null, 'All cart items deleted successfully', Response::HTTP_OK);
+}
+
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\TokenAbility;
 use App\Http\Controllers\AuthContorller;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
@@ -26,6 +27,7 @@ Route::apiResource('product-details', ProductDetailController::class);
 Route::get('product-details/{product_id}', [ProductDetailController::class, 'show']);
 Route::apiResource('product-wishes', ProductWishController::class);
 Route::apiResource('product-carts', ProductCartController::class);
+Route::delete('/product-carts/clear', [ProductCartController::class, 'clearCart']);
 Route::apiResource('customers',CustomerController::class);
 });
 Route::get('/user', [AuthContorller::class, 'user']);
@@ -34,6 +36,10 @@ Route::post('/register', [AuthContorller::class, 'register']);
 Route::post('/login', [AuthContorller::class, 'login']);
 //after login
 Route::post('/logout', [AuthContorller::class, 'logout'])->middleware('auth:sanctum');
+
+    Route::post('refresh-token', [AuthContorller::class, 'refreshToken']);
+        
+
 Route::middleware('auth:sanctum')->get('/user', [AuthContorller::class, 'user']);
 Route::apiResource('invoices', InvoiceController::class);
 
