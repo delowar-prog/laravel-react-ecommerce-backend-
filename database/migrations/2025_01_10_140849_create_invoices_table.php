@@ -16,8 +16,8 @@ return new class extends Migration
             $table->integer('total');
             $table->integer('vat');
             $table->integer('payable');
-            $table->string('cus_details');
-            $table->string('ship_details');
+            $table->unsignedBigInteger('cus_id');
+            $table->string('ship_details')->nullable();
             $table->string('transaction_id');
             $table->string('val_id');
             $table->enum('status', ['pending', 'processing', 'completed', 'declined']);
