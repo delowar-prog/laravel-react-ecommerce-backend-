@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use PhpParser\Node\Expr\AssignOp\Div;
 
 class DatabaseSeeder extends Seeder
 {
@@ -19,7 +20,11 @@ class DatabaseSeeder extends Seeder
         UserSeeder::class,
         CategorySeeder::class,
         BrandSeeder::class,
-        ProductSeeder::class
+        ProductSeeder::class,
+        DivisionSeeder::class,
+        DistrictSeeder::class,
+        UpazilaSeeder::class,
+        UnionSeeder::class,
        ]);
     }
 }

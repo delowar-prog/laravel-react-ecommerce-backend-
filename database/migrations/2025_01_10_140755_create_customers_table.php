@@ -13,23 +13,24 @@ return new class extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
-            $table->string('cus_name');
+            $table->string('cus_name')->nullable();
+            $table->string('cus_country')->nullable();
+            $table->foreignId('cus_division')->constrained('divisions')->onDelete('cascade');
+            $table->foreignId('cus_district')->constrained('districts')->onDelete('cascade');
+            $table->foreignId('cus_upazila')->constrained('upazilas')->onDelete('cascade');
+            $table->foreignId('cus_union')->constrained('unions')->onDelete('cascade');
             $table->string('cus_address');
-            $table->string('cus_country');
-            $table->string('cus_division');
-            $table->string('cus_district');
-            $table->string('cus_upazila');
-            $table->string('cus_post_code');
             $table->string('cus_phone');
             $table->string('cus_email')->unique();
-            $table->string('ship_name');
-            $table->string('ship_address');
-            $table->string('ship_country');
-            $table->string('ship_division');
-            $table->string('ship_district');
-            $table->string('ship_upazila');
-            $table->string('ship_post_code');
-            $table->string('ship_phone');
+            $table->string('ship_name')->nullable();
+            $table->string('ship_address')->nullable();
+            $table->string('ship_country')->nullable();
+            $table->foreignId('ship_division')->nullable()->constrained('divisions')->onDelete('cascade');
+            $table->foreignId('ship_district')->nullable()->constrained('districts')->onDelete('cascade');
+            $table->foreignId('ship_upazila')->nullable()->constrained('upazilas')->onDelete('cascade');
+            $table->foreignId('ship_union')->nullable()->constrained('unions')->onDelete('cascade');
+            $table->string('ship_phone')->nullable();
+            $table->boolean('same_as_billing')->default(0);
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });

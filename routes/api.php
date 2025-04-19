@@ -10,8 +10,11 @@ use App\Http\Controllers\ProductCartController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductDetailController;
 use App\Http\Controllers\ProductWishController;
+use App\Models\District;
+use App\Models\Division;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LocationController;
 
 // Route::get('/user', function (Request $request) {
 //     return $request->user();
@@ -32,6 +35,13 @@ Route::apiResource('customers',CustomerController::class);
 });
 Route::get('/user', [AuthContorller::class, 'user']);
 
+
+Route::get('divisions', [LocationController::class, 'getDivisions']);
+Route::get('districts', [LocationController::class, 'getDistricts']);
+Route::get('upazilas', [LocationController::class, 'getUpazilas']);
+Route::get('unions', [LocationController::class, 'getUnions']);
+
+
 Route::post('/register', [AuthContorller::class, 'register']);
 Route::post('/login', [AuthContorller::class, 'login']);
 //after login
@@ -45,4 +55,13 @@ Route::apiResource('invoices', InvoiceController::class);
 
 Route::apiResource('products', ProductController::class);
 Route::post('products/{product}',[ProductController::class,'update']);
+
+use App\Http\Controllers\BkashController;
+
+Route::post('bkash/get-token', [BkashController::class, 'getToken'])->name('bkash-get-token');
+Route::post('bkash/create-payment', [BkashController::class, 'createPayment'])->name('bkash-create-payment');
+Route::post('bkash/execute-payment', [BkashController::class, 'executePayment'])->name('bkash-execute-payment');
+Route::get('bkash/query-payment/{paymentID}', [BkashController::class, 'queryPayment'])->name('bkash-query-payment');
+Route::post('bkash/success', [BkashController::class, 'bkashSuccess'])->name('bkash-success');
+
 
