@@ -1,20 +1,36 @@
+
+## 🚀 Project Setup
+
+### ⚙️ Requirements
+
+- PHP 8.2+
+- Composer
+- Laravel 11
+- MySQL
+- Laravel Sanctum
+- Vite
+
+---
+
+### 📦 Backend - Laravel 11
+
+```bash
 # Clone the repository
 git clone [https://github.com/your-username/your-project.git](https://github.com/delowar-prog/laravel-react-ecommerce-backend-.git)
 cd your-project/backend
 
-# Install dependencies
+# Install PHP dependencies
 composer install
 
 # Copy environment file and generate app key
 cp .env.example .env
 php artisan key:generate
 
-# Configure your .env (DB, Sanctum, etc.)
-# Then run migrations
+# Set up database configuration in .env
 php artisan migrate
 
-# (Optional) Seed database
+# (Optional) Seed the database
 php artisan db:seed
 
-# Start Laravel server
+# Serve the application
 php artisan serve
